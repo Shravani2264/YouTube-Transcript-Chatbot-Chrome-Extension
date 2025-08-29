@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "YT Chatbot Extension (RAG Backend)",
+  "description": "Chatbot for YouTube videos using a RAG backend (FastAPI + LangChain + Gemini embeddings).",
+  "version": "1.0",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://youtu.be/*",
+    "https://*.youtube.com/*",
+    "http://localhost:8000/*",
+    "http://127.0.0.1:8000/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/watch*",
+        "https://*.youtube.com/watch*",
+        "https://youtu.be/*"
+      ],
+      "js": [
+        "content_script.js"
+      ]
+    }
+  ]
+}

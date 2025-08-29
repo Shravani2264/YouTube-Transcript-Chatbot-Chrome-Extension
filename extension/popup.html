@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YT Chatbot (RAG)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>YT Chatbot (RAG)</h1>
+    <div id="status">Status: <span id="statustxt">Idle</span></div>
+    <div id="chat" class="chat"></div>
+    <div class="controls">
+      <input id="query" placeholder="Ask a question about the video..." />
+      <button id="askBtn">Ask</button>
+    </div>
+    <div class="small">This extension sends questions + current video id to a local backend which runs the RAG pipeline (Gemini embeddings + FAISS + LLM).</div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
