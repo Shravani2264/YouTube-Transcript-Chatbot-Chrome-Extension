@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 import traceback
 from pytube import YouTube # Import pytube
+from langchain_community.embeddings import HuggingFaceEmbeddings
 
 # LangChain & Google Generative AI imports
 try:
@@ -44,7 +45,8 @@ def fetch_transcript(video_id: str, languages=['en']) -> str | None:
 def get_vectorstore(video_id: str) -> FAISS | None:
     """Loads a vector store from cache or builds a new one if it doesn't exist."""
     save_path = os.path.join(CACHE_DIR, f"{video_id}_faiss")
-    embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    # embeddings = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
     
     # Try to load from the local cache first
     if os.path.exists(save_path):
@@ -87,9 +89,6 @@ def get_vectorstore(video_id: str) -> FAISS | None:
         
     return vector_store
 
-# --- AI and Prompting Setup ---
-
-# --- NEW: Improved prompt template ---
 PROMPT_TEMPLATE = """
 You are a helpful assistant that answers questions about a specific YouTube video using its transcript and metadata. 
 Your capabilities are:
@@ -117,7 +116,7 @@ def get_llm():
     if LLM is None:
         print("Initializing LLM...")
         LLM = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
+            model="gemini-2.5-flash",
             temperature=0.3,
             convert_system_message_to_human=True
         )
