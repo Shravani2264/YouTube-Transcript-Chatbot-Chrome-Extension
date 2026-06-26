@@ -1,2 +1,7 @@
 .env
-__pycache__
+__pycache__/
+venv/
+venv_new/
+vector_cache/
+*.pyc
+*.pyo
